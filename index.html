@@ -46,24 +46,52 @@
 
   <h2>成像模式（Instrument Mode）</h2>
   <ul>
-    <li><strong>IW（Interferometric Wide Swath）</strong> — 最常见，分辨率 10m，适合陆地监测</li>
-    <li><strong>EW（Extra Wide Swath）</strong> — 主要用于海洋，分辨率 25~40m</li>
-    <li><strong>SM（Strip Map）</strong> — 覆盖小，精度高（很少在Earth Engine中出现）</li>
+    <li><strong>IW 模式 = “扫描式拍摄”</strong>：雷达天线边飞边左右摆动，把多个条带拼成一张大图，清晰度约 10 米，是陆地监测的默认模式。</li>
+    <li><strong>EW 模式 = “超宽角度拍摄”</strong>：摆动得更大，换来更广视野，但画质下降到约 25~40 米，常用于海洋观测。</li>
+    <li><strong>SM 模式 = “直直地拍”</strong>：不摆头，画质最好，但范围小，普通用户很少接触到，在 Earth Engine 中极少出现。</li>
   </ul>
+
 
   <h2>轨道方向（Orbit Pass）</h2>
   <ul>
     <li>🟦 <strong>ASCENDING（升轨）</strong> — 南向北飞行</li>
     <li>🟥 <strong>DESCENDING（降轨）</strong> — 北向南飞行</li>
   </ul>
+  
+  <h2>为何需要区分升轨 / 降轨？</h2>
+  <ul>
+    <li><strong>观测方向不同</strong>：SAR 雷达成像是侧视模式，升轨与降轨会从不同方位照射地物，导致同一地物在 VV/VH 波段下的亮度差异很大。</li>
+    <li><strong>成像时间不同</strong>：降轨通常在上午，升轨在下午，光学影像的阴影长度和亮温都会受影响。</li>
+    <li><strong>避免混用导致误判</strong>：进行变化检测时（如地表沉降、水体监测），必须使用相同轨道方向的数据，否则会出现“假变化”。</li>
+    <li>由于 SAR 的侧视成像特性，升轨与降轨从不同侧面照射地形，例如升轨使山的西坡信号增强，而降轨则使东坡更亮，因此两者不能直接拼接或用于合成，否则会产生明显的不一致。</li>
+  </ul>
 
-  <h2>极化波段（Polarization）</h2>
+  <h2>极化方式（Polarization）</h2>
   <ul>
     <li><strong>VV</strong>：垂直发射 / 垂直接收（最主流）</li>
     <li><strong>VH</strong>：垂直发射 / 水平接收（常与 VV 配对）</li>
     <li><strong>HH</strong>：水平发射 / 水平接收（多见于海洋）</li>
     <li><strong>HV</strong>：水平发射 / 垂直接收（较少）</li>
   </ul>
+
+  <h2>GRD中可选的极化波段组合</h2>
+  <p>Sentinel-1 SAR 的极化方式决定了雷达波的发射和接收方向，不同极化对地物的反射特性敏感度不同。GRD 数据中只提供以下四种极化组合：</p>
+  <ul>
+    <li>
+      <strong>VV</strong>：单极化，垂直发射 / 垂直接收（最常用，用于陆地监测）
+    </li>
+    <li>
+      <strong>HH</strong>：单极化，水平发射 / 水平接收（主要用于海洋和船舶探测）
+    </li>
+    <li>
+      <strong>VV + VH</strong>：双极化，垂直发射 / 垂直+水平接收（VV 为共极化，VH 为交叉极化，常用于植被和农田监测）
+    </li>
+    <li>
+      <strong>HH + HV</strong>：双极化，水平发射 / 水平+垂直接收（HH 为共极化，HV 为交叉极化，较少使用）
+    </li>
+  </ul>
+  <p>✅ Sentinel-1 GRD 数据之所以只提供这四种组合，是因为它们覆盖了绝大部分地表信息，同时兼顾数据量和处理复杂度。额外极化组合虽然可能提供更多信息，但对常规地表监测增益有限，因此未在 GRD 产品中提供。</p>
+
 
 </div>
 
