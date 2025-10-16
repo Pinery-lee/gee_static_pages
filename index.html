@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>哨兵一号 Sentinel-1 GRD 数据简介</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
+    header { background: #1b1f3a; color: #fff; padding: 40px 20px; text-align: center; }
+    h1 { margin: 0; font-size: 32px; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
+    h2 { margin-top: 40px; color: #1b1f3a; }
+    ul { padding-left: 20px; }
+    footer { text-align: center; padding: 20px; color: #666; font-size: 14px; }
+    .highlight { background: #e3eefc; padding: 10px; border-left: 4px solid #1b6ec2; margin: 15px 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>哨兵一号 Sentinel-1 GRD 数据简介</h1>
+  <p>免费的 C 波段雷达影像，可全天时、全天候成像</p>
+</header>
+
+<div class="container">
+
+  <h2>什么是 GRD 数据？</h2>
+  <p>GRD（Ground Range Detected）是 Sentinel-1 雷达卫星提供的一种标准产品，经过正射校正和幅度计算，适合快速可视化和一般分析。</p>
+  <div class="highlight">特点：已进行辐射定标 + 地理编码，像素值为后向散射强度（dB）。</div>
+
+  <h2>GRD 数据可以用来做什么？</h2>
+  <ul>
+    <li>水体提取 / 洪涝监测</li>
+    <li>农作物变化监测（如水稻种植淹水期）</li>
+    <li>城市扩张 / 建筑物识别</li>
+    <li>地表运动（粗略）/ 山体滑坡前后变化</li>
+    <li>海洋油膜、船只探测</li>
+  </ul>
+
+  <h2>GRD 数据不能做什么？</h2>
+  <ul>
+    <li>不能直接用于高精度地形测量（需要 SLC 干涉产品）</li>
+    <li>不能反映真实地表颜色或植被类型（是雷达信号，不是光学影像）</li>
+    <li>无法区分细粒度地物（如小型道路、树种等）</li>
+    <li>噪声较大，需经过滤波和区域统计后才能用于机器学习</li>
+  </ul>
+
+  <h2>常见极化模式</h2>
+  <ul>
+    <li><strong>VV / VH（最常见）</strong>：垂直发射+垂直/水平接收</li>
+    <li><strong>HH / HV（较少）</strong>：多见于海洋或极地区域</li>
+    <li>多数陆地地区仅提供 <strong>VV 或 VV+VH</strong> 数据</li>
+  </ul>
+
+</div>
+
+<footer>
+  本页面可自由引用与转载 | 数据来源：ESA Copernicus Sentinel-1
+</footer>
+
+</body>
+</html>
