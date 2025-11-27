@@ -1,106 +1,168 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Sentinel-1 GRD 数据简介</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #f5f7fa; color: #333; margin: 0; line-height: 1.6; }
-    header { background: #1e3a5f; color: white; padding: 40px 20px; text-align: center; }
-    .container { max-width: 900px; margin: auto; padding: 20px; }
-    h2 { color: #1e3a5f; margin-top: 35px; }
-    ul { padding-left: 20px; }
-    .bad { background: #ffecec; border-left: 4px solid #ff6b6b; padding: 10px; margin: 10px 0; }
-    .good { background: #e5f8dd; border-left: 4px solid #5cb85c; padding: 10px; margin: 10px 0; }
-    footer { text-align: center; font-size: 14px; padding: 20px; color: #666; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>农业遥感云计算产线 - 门户</title>
+    <!-- 引入 Tailwind CSS 进行快速样式设计 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide 图标库 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
-<body>
 
-<header>
-  <h1>哨兵一号 Sentinel-1 GRD 数据简介</h1>
-  <p>C波段雷达影像（5.405GHz），可全天时、全天候成像</p>
-</header>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
-<div class="container">
+    <!-- 顶部导航栏 -->
+    <header class="bg-slate-900 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i data-lucide="cloud" class="h-8 w-8 text-blue-400"></i>
+                <h1 class="text-xl font-bold tracking-wide">农业遥感云计算平台</h1>
+            </div>
+            <!-- 这里可以放回主页的链接 -->
+            <a href="index.html" class="text-sm text-slate-300 hover:text-white transition flex items-center gap-1">
+                <i data-lucide="home" class="h-4 w-4"></i> 返回主页
+            </a>
+        </div>
+    </header>
 
-  <h2>什么是 GRD 数据？</h2>
-  <p>GRD（Ground Range Detected）是 Sentinel-1 雷达的标准产品，已处理为<strong>辐射定标 + 地形校正后的后向散射系数</strong>，单位为 <code>dB</code>。</p>
-  <p>像素值表示地物对雷达波的反射强弱，可用于识别水体、城市、农田等。</p>
+    <!-- 主要内容区 -->
+    <main class="flex-grow container mx-auto px-6 py-12">
 
-  <h2>可以用来做什么？</h2>
-  <div class="good">
-    ✅ 水体监测 / 洪涝提取<br>
-    ✅ 农作物淹水期 / 种植结构变化<br>
-    ✅ 城市扩张 / 基础设施监测<br>
-    ✅ 海洋船只 / 油膜探测<br>
-    ✅ 变化检测（多时相对比）
-  </div>
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">核心业务产线</h2>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">基于 GEE 云计算平台，提供从数据获取、智能分类到定量分析的全流程解决方案。</p>
+        </div>
 
-  <h2>不能用来做什么？</h2>
-  <div class="bad">
-    ❌ <strong>不能用于干涉测量（InSAR）或形变分析</strong>（因为 GRD 已去除相位信息）<br>
-    ❌ 无法生成高精度地形（需使用 SLC 产品）<br>
-    ❌ 无法表示真实颜色或植被类型（非光学影像）<br>
-    ❌ 噪声较大，需要滤波 / 统计分析后使用
-  </div>
+        <!-- 三大产线卡片容器 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-  <h2>成像模式（Instrument Mode）</h2>
-  <ul>
-    <li><strong>IW 模式 = “扫描式拍摄”</strong>：雷达天线边飞边左右摆动，把多个条带拼成一张大图，清晰度约 10 米，是陆地监测的默认模式。</li>
-    <li><strong>EW 模式 = “超宽角度拍摄”</strong>：摆动得更大，换来更广视野，但画质下降到约 25~40 米，常用于海洋观测。</li>
-    <li><strong>SM 模式 = “直直地拍”</strong>：不摆头，画质最好，但范围小，普通用户很少接触到，在 Earth Engine 中极少出现。</li>
-  </ul>
+            <!-- 产线 1：数据查询下载 -->
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-blue-500 hover-lift flex flex-col">
+                <div class="p-6 flex-grow">
+                    <div class="h-12 w-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="database" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">数据查询下载产线</h3>
+                    <p class="text-slate-500 text-sm mb-4">提供多源遥感数据的快速检索与预处理下载服务。</p>
 
+                    <!-- 模块列表 -->
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center text-sm text-slate-700 bg-slate-50 p-2 rounded">
+                            <i data-lucide="sun" class="h-4 w-4 mr-2 text-orange-500"></i> 光学数据模块
+                        </li>
+                        <li class="flex items-center text-sm text-slate-700 bg-slate-50 p-2 rounded">
+                            <i data-lucide="radar" class="h-4 w-4 mr-2 text-blue-500"></i>
+                            <!-- 这里链接到了你的第二个页面 -->
+                            <a href="sentinel_grd.html"
+                                class="hover:text-blue-600 underline decoration-blue-300 underline-offset-2">雷达数据模块 (S1
+                                GRD)</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-slate-50 border-t border-slate-100">
+                    <!-- 产线 1 的真实链接填在这里 -->
+                    <a href="https://code.earthengine.google.com/5b61abe51daff45d19564aeaacd4ede3" target="_blank"
+                        class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition">
+                        进入产线系统 &rarr;
+                    </a>
+                </div>
+            </div>
 
-  <h2>轨道方向（Orbit Pass）</h2>
-  <ul>
-    <li>🟦 <strong>ASCENDING（升轨）</strong> — 南向北飞行</li>
-    <li>🟥 <strong>DESCENDING（降轨）</strong> — 北向南飞行</li>
-  </ul>
-  
-  <h2>为何需要区分升轨 / 降轨？</h2>
-  <ul>
-    <li><strong>观测方向不同</strong>：SAR 雷达成像是侧视模式，升轨与降轨会从不同方位照射地物，导致同一地物在 VV/VH 波段下的亮度差异很大。</li>
-    <li><strong>成像时间不同</strong>：降轨通常在上午，升轨在下午，光学影像的阴影长度和亮温都会受影响。</li>
-    <li><strong>避免混用导致误判</strong>：进行变化检测时（如地表沉降、水体监测），必须使用相同轨道方向的数据，否则会出现“假变化”。</li>
-    <li>由于 SAR 的侧视成像特性，升轨与降轨从不同侧面照射地形，例如升轨使山的西坡信号增强，而降轨则使东坡更亮，因此两者不能直接拼接或用于合成，否则会产生明显的不一致。</li>
-  </ul>
+            <!-- 产线 2：机器学习分类 -->
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-emerald-500 hover-lift flex flex-col">
+                <div class="p-6 flex-grow">
+                    <div
+                        class="h-12 w-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="brain-circuit" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">机器学习分类产线</h3>
+                    <p class="text-slate-500 text-sm mb-4">基于随机森林、SVM等算法的自动化地物分类与提取。</p>
 
-  <h2>极化方式（Polarization）</h2>
-  <ul>
-    <li><strong>VV</strong>：垂直发射 / 垂直接收（最主流）</li>
-    <li><strong>VH</strong>：垂直发射 / 水平接收（常与 VV 配对）</li>
-    <li><strong>HH</strong>：水平发射 / 水平接收（多见于海洋）</li>
-    <li><strong>HV</strong>：水平发射 / 垂直接收（较少）</li>
-  </ul>
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-600">
+                        <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">影像输入</span>
+                        <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">样本制作</span>
+                        <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">特征计算</span>
+                        <span class="bg-emerald-50 px-2 py-1 rounded border border-emerald-100">模型训练</span>
+                    </div>
+                </div>
+                <div class="p-6 bg-slate-50 border-t border-slate-100">
+                    <!-- 产线 2 的真实链接填在这里 -->
+                    <a href="https://code.earthengine.google.com/537106e0ff81cc95f977e19617140db9" target="_blank"
+                        class="block w-full text-center bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded transition">
+                        进入产线系统 &rarr;
+                    </a>
+                </div>
+            </div>
 
-  <h2>GRD中可选的极化波段组合</h2>
-  <p>Sentinel-1 SAR 的极化方式决定了雷达波的发射和接收方向，不同极化对地物的反射特性敏感度不同。GRD 数据中只提供以下四种极化组合：</p>
-  <ul>
-    <li>
-      <strong>VV</strong>：单极化，垂直发射 / 垂直接收（最常用，用于陆地监测）
-    </li>
-    <li>
-      <strong>HH</strong>：单极化，水平发射 / 水平接收（主要用于海洋和船舶探测）
-    </li>
-    <li>
-      <strong>VV + VH</strong>：双极化，垂直发射 / 垂直+水平接收（VV 为共极化，VH 为交叉极化，常用于植被和农田监测）
-    </li>
-    <li>
-      <strong>HH + HV</strong>：双极化，水平发射 / 水平+垂直接收（HH 为共极化，HV 为交叉极化，较少使用）
-    </li>
-  </ul>
-  <p>✅ Sentinel-1 GRD 数据之所以只提供这四种组合，是因为它们覆盖了绝大部分地表信息，同时兼顾数据量和处理复杂度。额外极化组合虽然可能提供更多信息，但对常规地表监测增益有限，因此未在 GRD 产品中提供。</p>
+            <!-- 产线 3：定量分析 -->
+            <div
+                class="bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-amber-500 hover-lift flex flex-col">
+                <div class="p-6 flex-grow">
+                    <div class="h-12 w-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="activity" class="h-6 w-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">定量分析产线</h3>
+                    <p class="text-slate-500 text-sm mb-4">针对长势、产量、墒情等指标的定量反演与监测。</p>
 
+                    <ul class="space-y-2 mb-6 text-sm text-slate-700">
+                        <li class="flex items-center"><i data-lucide="check-circle-2"
+                                class="h-3 w-3 mr-2 text-amber-500"></i> 指数下载 / 耕地数据</li>
+                        <li class="flex items-center"><i data-lucide="check-circle-2"
+                                class="h-3 w-3 mr-2 text-amber-500"></i> 作物长势监测</li>
+                        <li class="flex items-center"><i data-lucide="check-circle-2"
+                                class="h-3 w-3 mr-2 text-amber-500"></i> 冬小麦产量预测</li>
+                    </ul>
+                </div>
+                <div class="p-6 bg-slate-50 border-t border-slate-100">
+                    <!-- 产线 3 的真实链接填在这里 -->
+                    <a href="https://code.earthengine.google.com/bc22aa0d80c127d0b8de9b2d69558b55" target="_blank"
+                        class="block w-full text-center bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-4 rounded transition">
+                        进入产线系统 &rarr;
+                    </a>
+                </div>
+            </div>
 
-</div>
+        </div>
 
-<footer>
-  本页面可自由引用与转载 | 数据来源：
-  <a href="https://developers.google.com/earth-engine/datasets/catalog/COPERNICUS_S1_GRD#description" target="_blank">
-    ESA Sentinel-1 & Google Earth Engine
-  </a>
-</footer>
+        <!-- 底部 GEE 标识 -->
+        <div class="mt-16 text-center opacity-60">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <i data-lucide="globe" class="h-5 w-5"></i>
+                <span class="font-semibold">Powered by Google Earth Engine</span>
+            </div>
+            <p class="text-sm">Cloud Computing Platform</p>
+        </div>
 
+    </main>
+
+    <footer class="bg-slate-100 py-6 border-t border-slate-200">
+        <div class="container mx-auto text-center text-slate-500 text-sm">
+            &copy; 农业遥感云计算平台
+        </div>
+    </footer>
+
+    <script>
+        // 初始化图标
+        lucide.createIcons();
+    </script>
 </body>
+
 </html>
